@@ -1,0 +1,22 @@
+{
+    "name": "gebruederheitz/wp-block-video-overlay",
+    "description": "The backend helper for the video overlay block.",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "Gebruederheitz\\GutenbergBlocks\\VideoOverlay\\": "Gebruederheitz/GutenbergBlocks/VideoOverlay"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andreas Maros",
+            "email": "andreas.maros@gebruederheitz.de"
+        }
+    ],
+    "require": {
+	    "php": "^7.3",
+        "gebruederheitz/wp-gutenberg-blocks": "~1.0",
+        "gebruederheitz/wp-simple-rest": "^1.0"
+    }
+}
