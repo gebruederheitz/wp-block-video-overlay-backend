@@ -49,7 +49,7 @@ class VideoOverlayBlock
         new ImageSideloader();
         $this->blockHandler = new DynamicBlock(
             'ghwp/video-overlay',
-            __DIR__ . '../../../templates/video-overlay.php',
+            __DIR__ . '/../../../templates/video-overlay.php',
             self::ATTRIBUTES,
             self::REQUIRED_ATTRIBUTES,
             'template-parts/blocks/video-overlay.php'
@@ -69,7 +69,7 @@ class VideoOverlayBlock
      *
      * @return array
      */
-    public function onScriptLocalizationData(array &$locDat): array
+    public function onScriptLocalizationData(array $locDat): array
     {
         if (!isset($locDat['restCustomUrl'])) {
             $locDat['restCustomUrl'] = get_rest_url(null, withRest::getRestNamespace());
