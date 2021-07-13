@@ -90,16 +90,16 @@
         },
         {
             "name": "gebruederheitz/wp-simple-rest",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gebruederheitz/wp-simple-rest.git",
-                "reference": "a9c43c6cda1eb0fcd6cc6e8f91b2af070db5b9a6"
+                "reference": "4f11b2ab72f362d3ed85273f9d498f38745f0d07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gebruederheitz/wp-simple-rest/zipball/a9c43c6cda1eb0fcd6cc6e8f91b2af070db5b9a6",
-                "reference": "a9c43c6cda1eb0fcd6cc6e8f91b2af070db5b9a6",
+                "url": "https://api.github.com/repos/gebruederheitz/wp-simple-rest/zipball/4f11b2ab72f362d3ed85273f9d498f38745f0d07",
+                "reference": "4f11b2ab72f362d3ed85273f9d498f38745f0d07",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +108,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Gebruederheitz\\Traits\\Rest\\": "Gebruederheitz/Traits/Rest"
+                    "Gebruederheitz\\Traits\\Rest\\": "Gebruederheitz/Traits/Rest/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -124,9 +124,9 @@
             "description": "A trait to help you set up REST endpoints in Wordpress.",
             "support": {
                 "issues": "https://github.com/gebruederheitz/wp-simple-rest/issues",
-                "source": "https://github.com/gebruederheitz/wp-simple-rest/tree/v1.0.1"
+                "source": "https://github.com/gebruederheitz/wp-simple-rest/tree/v1.0.2"
             },
-            "time": "2021-07-08T19:18:53+00:00"
+            "time": "2021-07-13T17:13:51+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
