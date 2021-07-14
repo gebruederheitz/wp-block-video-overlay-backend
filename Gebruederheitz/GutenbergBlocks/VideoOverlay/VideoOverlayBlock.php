@@ -4,10 +4,15 @@ namespace Gebruederheitz\GutenbergBlocks\VideoOverlay;
 
 use Gebruederheitz\GutenbergBlocks\BlockRegistrar;
 use Gebruederheitz\GutenbergBlocks\DynamicBlock;
-use Gebruederheitz\Traits\withREST;
+use Gebruederheitz\Traits\Rest\withREST;
 
 class VideoOverlayBlock
 {
+    /*
+     * @NB workaround for a truly weird bug, where withRest ca not be found
+     * in ImageSideloader if it has not been used elsewhere before
+     */
+    use withREST;
     /**
      * @hook ghwp-embed-types
      * @description An array of possible embed types for use with a consent
@@ -54,12 +59,18 @@ class VideoOverlayBlock
             self::REQUIRED_ATTRIBUTES,
             'template-parts/blocks/video-overlay.php'
         );
+        $this->blockHandler->register();
 
         add_filter(
             BlockRegistrar::HOOK_SCRIPT_LOCALIZATION_DATA,
             [$this, 'onScriptLocalizationData']
         );
     }
+
+    /* @NB: part of the same fix: abstract methods must be implemented */
+    public static function getRestRoutes(): array {return [];}
+
+    public function getInstanceRestRoutes(): array {return [];}
 
     /**
      * Provide the editor component with relevant data through the script
