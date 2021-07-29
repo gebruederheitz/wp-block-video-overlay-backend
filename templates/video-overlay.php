@@ -5,9 +5,11 @@
     $mediaID      = get_query_var('mediaID');
     $mediaAltText = get_query_var('mediaAltText');
     $providerType = get_query_var('providerType');
+    $className    = get_query_var('className') ?? '';
 
+    $classNames = [$className, 'ghwp-video'];
 ?>
-<div class="ghwp-video">
+<div class="<?= implode(' ', $classNames) ?>">
     <a
         class="ghwp-video-link"
         data-ghwp-src="<?= $videoUrl ?>"
