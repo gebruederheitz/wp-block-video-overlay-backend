@@ -12,7 +12,7 @@
 <div class="<?= implode(' ', $classNames) ?>">
     <a
         class="ghwp-video-link"
-        <?= empty($providerType) ? 'src' : 'data-ghct-src' ?>="<?= $videoUrl ?>"
+        <?= empty($providerType) ? 'href' : 'data-ghct-src' ?>="<?= $videoUrl ?>"
         <?php if (!empty($providerType)) echo 'data-ghct-type="'. $providerType . '"'; ?>
     >
         <img
