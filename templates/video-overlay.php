@@ -12,8 +12,8 @@
 <div class="<?= implode(' ', $classNames) ?>">
     <a
         class="ghwp-video-link"
-        data-ghwp-src="<?= $videoUrl ?>"
-        data-ghwp-type="<?= $providerType ?>"
+        <?= empty($providerType) ? 'src' : 'data-ghct-src' ?>="<?= $videoUrl ?>"
+        <?php if (!empty($providerType)) echo 'data-ghct-type="'. $providerType . '"'; ?>
     >
         <img
             width="480"

@@ -48,14 +48,18 @@ class VideoOverlayBlock
 
     protected const REQUIRED_ATTRIBUTES = ['videoUrl'];
 
-    public function __construct()
+    /**
+     * @param string $defaultEmbedProvider The embed provider type used by default
+     */
+    public function __construct(string $defaultEmbedProvider = 'youtube')
     {
+        // Make sure an instance of BlockRegistrar exists
         BlockRegistrar::getInstance();
         new ImageSideloader();
         $this->blockHandler = new DynamicBlock(
             'ghwp/video-overlay',
             __DIR__ . '/../../../templates/video-overlay.php',
-            self::ATTRIBUTES,
+            $this->getAttributes($defaultEmbedProvider),
             self::REQUIRED_ATTRIBUTES,
             'template-parts/blocks/video-overlay.php'
         );
@@ -94,5 +98,13 @@ class VideoOverlayBlock
 
 
         return $locDat;
+    }
+    
+    protected function getAttributes(string $defaultEmbedProvider): array
+    {
+        $attributes = self::ATTRIBUTES;
+        $attributes['providerType']['default'] = $defaultEmbedProvider;
+        
+        return $attributes;
     }
 }
