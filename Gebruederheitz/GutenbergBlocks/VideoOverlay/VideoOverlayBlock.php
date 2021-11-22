@@ -4,7 +4,7 @@ namespace Gebruederheitz\GutenbergBlocks\VideoOverlay;
 
 use Gebruederheitz\GutenbergBlocks\BlockRegistrar;
 use Gebruederheitz\GutenbergBlocks\DynamicBlock;
-use Gebruederheitz\Traits\Rest\withREST;
+use Gebruederheitz\Wordpress\Rest\Traits\withREST;
 
 class VideoOverlayBlock
 {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e372deb24c8e42cd1be4a0807ef5ada",
+    "content-hash": "a1f7ac2ac76b8ee8dcf9fad1772a4114",
     "packages": [
         {
             "name": "gebruederheitz/simple-singleton",
@@ -48,16 +48,16 @@
         },
         {
             "name": "gebruederheitz/wp-gutenberg-blocks",
-            "version": "v1.0.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gebruederheitz/wp-gutenberg-blocks.git",
-                "reference": "f9e7d0020195f9b92da8a3a1a409bba0ecffe02f"
+                "reference": "d48d72eeb485c2330e1f3e8d2af590f706a1c611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gebruederheitz/wp-gutenberg-blocks/zipball/f9e7d0020195f9b92da8a3a1a409bba0ecffe02f",
-                "reference": "f9e7d0020195f9b92da8a3a1a409bba0ecffe02f",
+                "url": "https://api.github.com/repos/gebruederheitz/wp-gutenberg-blocks/zipball/d48d72eeb485c2330e1f3e8d2af590f706a1c611",
+                "reference": "d48d72eeb485c2330e1f3e8d2af590f706a1c611",
                 "shasum": ""
             },
             "require": {
@@ -82,24 +82,20 @@
                 }
             ],
             "description": "Helps you get your blocks on the road",
-            "support": {
-                "issues": "https://github.com/gebruederheitz/wp-gutenberg-blocks/issues",
-                "source": "https://github.com/gebruederheitz/wp-gutenberg-blocks/tree/v1.0.0"
-            },
-            "time": "2021-07-08T09:50:48+00:00"
+            "time": "2021-10-27T11:49:38+00:00"
         },
         {
             "name": "gebruederheitz/wp-simple-rest",
-            "version": "v1.0.2",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gebruederheitz/wp-simple-rest.git",
-                "reference": "4f11b2ab72f362d3ed85273f9d498f38745f0d07"
+                "reference": "662187c3eff4df9b951c135404286d9548425ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gebruederheitz/wp-simple-rest/zipball/4f11b2ab72f362d3ed85273f9d498f38745f0d07",
-                "reference": "4f11b2ab72f362d3ed85273f9d498f38745f0d07",
+                "url": "https://api.github.com/repos/gebruederheitz/wp-simple-rest/zipball/662187c3eff4df9b951c135404286d9548425ad0",
+                "reference": "662187c3eff4df9b951c135404286d9548425ad0",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +104,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Gebruederheitz\\Traits\\Rest\\": "Gebruederheitz/Traits/Rest/"
+                    "Gebruederheitz\\Wordpress\\Rest\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -122,11 +118,7 @@
                 }
             ],
             "description": "A trait to help you set up REST endpoints in Wordpress.",
-            "support": {
-                "issues": "https://github.com/gebruederheitz/wp-simple-rest/issues",
-                "source": "https://github.com/gebruederheitz/wp-simple-rest/tree/v1.0.2"
-            },
-            "time": "2021-07-13T17:13:51+00:00"
+            "time": "2021-11-18T17:26:54+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -276,16 +268,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v5.3.3",
+            "version": "v5.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "485c83a2fb5893e2ff21bf4bfc7fdf48b4967229"
+                "reference": "4500fe63dc9c6ffc32d3b1cb0448c329f9c814b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/485c83a2fb5893e2ff21bf4bfc7fdf48b4967229",
-                "reference": "485c83a2fb5893e2ff21bf4bfc7fdf48b4967229",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/4500fe63dc9c6ffc32d3b1cb0448c329f9c814b7",
+                "reference": "4500fe63dc9c6ffc32d3b1cb0448c329f9c814b7",
                 "shasum": ""
             },
             "require": {
@@ -330,9 +322,6 @@
             ],
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/yaml/tree/v5.3.3"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -347,7 +336,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-24T08:13:00+00:00"
+            "time": "2021-07-29T06:20:01+00:00"
         }
     ],
     "packages-dev": [],
@@ -360,5 +349,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "1.1.0"
 }
