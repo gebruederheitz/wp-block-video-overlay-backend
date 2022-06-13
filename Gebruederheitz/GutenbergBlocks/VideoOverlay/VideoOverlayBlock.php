@@ -46,6 +46,14 @@ class VideoOverlayBlock
             'type'    => 'string',
             'default' => 'youtube',
         ],
+        'type' => [
+            'type' => 'string',
+            'default' => 'overlay',
+        ],
+        'videoEmbedUrl' => [
+            'type' => 'string',
+            'default' => '',
+        ],
     ];
 
     protected const REQUIRED_ATTRIBUTES = ['videoUrl'];
