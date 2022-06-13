@@ -20,6 +20,8 @@ class VideoOverlayBlock
      */
     public const HOOK_EMBED_TYPES = 'ghwp-embed-types';
 
+    public const HOOK_ATTRIBUTES = 'ghwp-video-overlay-attributes';
+
     /** @var DynamicBlock */
     protected $blockHandler;
 
@@ -104,6 +106,7 @@ class VideoOverlayBlock
     {
         $attributes = self::ATTRIBUTES;
         $attributes['providerType']['default'] = $defaultEmbedProvider;
+        $attributes = apply_filters(self::HOOK_ATTRIBUTES, $attributes);
         
         return $attributes;
     }
