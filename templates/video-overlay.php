@@ -30,7 +30,10 @@
         </a>
     <?php elseif ($type === 'inline'): ?>
         <div class="ghwp-video-image" style='background-image: url("<?= $mediaURL ?>");'>
-            <iframe data-ghct-src="<?= $embedUrl ?>" data-ghct-type="<?= $providerType ?>"></iframe>
+            <iframe
+                <?= empty($providerType) ? 'src' : 'data-ghct-src' ?>="<?= $embedUrl ?>"
+                <?php if (!empty($providerType)) echo 'data-ghct-type="'. $providerType . '"'; ?>
+            ></iframe>
             <?= PartialRenderer::render(__DIR__ . '/play-icon.php'); ?>
         </div>
     <?php endif; ?>
