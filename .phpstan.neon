@@ -1,0 +1,8 @@
+parameters:
+  level: 6
+  paths:
+    - Gebruederheitz/
+  ignoreErrors:
+    - '%Parameter #2 \$post_id of function media_sideload_image expects int, null given%'
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon

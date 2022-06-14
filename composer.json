@@ -17,6 +17,11 @@
     "require": {
 	    "php": "^7.3",
         "gebruederheitz/wp-gutenberg-blocks": "~1.0",
-        "gebruederheitz/wp-simple-rest": "^2.0"
+        "gebruederheitz/wp-simple-rest": "^2.0",
+        "phpstan/phpstan": "^1.7",
+        "szepeviktor/phpstan-wordpress": "^1.1"
+    },
+    "scripts": {
+        "lint": "phpstan analyse -c .phpstan.neon"
     }
 }
