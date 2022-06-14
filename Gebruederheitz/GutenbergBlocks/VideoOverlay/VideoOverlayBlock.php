@@ -26,24 +26,24 @@ class VideoOverlayBlock
     protected $blockHandler;
 
     protected const ATTRIBUTES = [
-        'videoUrl'     => [
-            'type'    => 'string',
+        'videoUrl' => [
+            'type' => 'string',
             'default' => null,
         ],
-        'mediaURL'     => [
-            'type'    => 'string',
+        'mediaURL' => [
+            'type' => 'string',
             'default' => '',
         ],
-        'mediaID'      => [
-            'type'    => 'number',
+        'mediaID' => [
+            'type' => 'number',
             'default' => 0,
         ],
         'mediaAltText' => [
-            'type'    => 'string',
+            'type' => 'string',
             'default' => '',
         ],
         'providerType' => [
-            'type'    => 'string',
+            'type' => 'string',
             'default' => 'youtube',
         ],
         'type' => [
@@ -71,51 +71,69 @@ class VideoOverlayBlock
             __DIR__ . '/../../../templates/video-overlay.php',
             $this->getAttributes($defaultEmbedProvider),
             self::REQUIRED_ATTRIBUTES,
-            'template-parts/blocks/video-overlay.php'
+            'template-parts/blocks/video-overlay.php',
         );
         $this->blockHandler->register();
 
-        add_filter(
-            BlockRegistrar::HOOK_SCRIPT_LOCALIZATION_DATA,
-            [$this, 'onScriptLocalizationData']
-        );
+        add_filter(BlockRegistrar::HOOK_SCRIPT_LOCALIZATION_DATA, [
+            $this,
+            'onScriptLocalizationData',
+        ]);
     }
 
     /* @NB: part of the same fix: abstract methods must be implemented */
-    public static function getRestRoutes(): array {return [];}
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public static function getRestRoutes(): array
+    {
+        return [];
+    }
 
-    public function getInstanceRestRoutes(): array {return [];}
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getInstanceRestRoutes(): array
+    {
+        return [];
+    }
 
     /**
      * Provide the editor component with relevant data through the script
      * localization API.
      *
-     * @param array $locDat
+     * @param array<string, mixed> $locDat
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function onScriptLocalizationData(array $locDat): array
     {
         if (!isset($locDat['restCustomUrl'])) {
-            $locDat['restCustomUrl'] = get_rest_url(null, withRest::getRestNamespace());
+            $locDat['restCustomUrl'] = get_rest_url(
+                null,
+                withRest::getRestNamespace(),
+            );
         }
         if (!isset($locDat['restApiNonce'])) {
             $locDat['restApiNonce'] = wp_create_nonce('wp_rest');
         }
         if (!isset($locDat['embedTypes'])) {
-            $locDat['embedTypes'] = apply_filters(static::HOOK_EMBED_TYPES, []) ?: [];
+            $locDat['embedTypes'] =
+                apply_filters(static::HOOK_EMBED_TYPES, []) ?: [];
         }
-
 
         return $locDat;
     }
-    
+
+    /**
+     * @return array<string, mixed>
+     */
     protected function getAttributes(string $defaultEmbedProvider): array
     {
         $attributes = self::ATTRIBUTES;
         $attributes['providerType']['default'] = $defaultEmbedProvider;
         $attributes = apply_filters(self::HOOK_ATTRIBUTES, $attributes);
-        
+
         return $attributes;
     }
 }

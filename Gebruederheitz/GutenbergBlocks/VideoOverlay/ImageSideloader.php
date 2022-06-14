@@ -3,9 +3,9 @@
 namespace Gebruederheitz\GutenbergBlocks\VideoOverlay;
 
 /* See https://developer.wordpress.org/reference/functions/media_sideload_image/#more-information */
-require_once(ABSPATH . 'wp-admin/includes/media.php');
-require_once(ABSPATH . 'wp-admin/includes/file.php');
-require_once(ABSPATH . 'wp-admin/includes/image.php');
+require_once ABSPATH . 'wp-admin/includes/media.php';
+require_once ABSPATH . 'wp-admin/includes/file.php';
+require_once ABSPATH . 'wp-admin/includes/image.php';
 
 use Gebruederheitz\Wordpress\Rest\Traits\withREST;
 
@@ -18,6 +18,9 @@ class ImageSideloader
         $this->initInstanceRestApi();
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function restSideload(\WP_REST_Request $request): array
     {
         $url = $request->get_param('imageUrl');
@@ -29,11 +32,17 @@ class ImageSideloader
         ];
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     public static function getRestRoutes(): array
     {
         return [];
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     public function getInstanceRestRoutes(): array
     {
         return [
@@ -48,25 +57,26 @@ class ImageSideloader
                     },
                     'args' => [
                         'imageUrl' => [
-                            'description' => 'The image URL to load into the media library',
+                            'description' =>
+                                'The image URL to load into the media library',
                             'default' => '',
                             'type' => 'string',
                             'sanitize_callback' => 'esc_url_raw',
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
         ];
     }
 
+    /**
+     * @return array{0: string, 1: string}
+     */
     private function sideload(string $imageUrl): array
     {
         $mediaId = \media_sideload_image($imageUrl, null, null, 'id');
         $mediaUrl = \wp_get_attachment_url($mediaId);
 
-        return [
-            $mediaId,
-            $mediaUrl,
-        ];
+        return [$mediaId, $mediaUrl];
     }
 }
