@@ -9,7 +9,7 @@ use Gebruederheitz\Wordpress\Rest\Traits\withREST;
 class VideoOverlayBlock
 {
     /*
-     * @NB workaround for a truly weird bug, where withRest ca not be found
+     * @NB workaround for a truly weird bug, where withRest can not be found
      * in ImageSideloader if it has not been used elsewhere before
      */
     use withREST;
@@ -53,6 +53,10 @@ class VideoOverlayBlock
         'videoEmbedUrl' => [
             'type' => 'string',
             'default' => '',
+        ],
+        'lazyLoadPreviewImage' => [
+            'type' => 'boolean',
+            'default' => true,
         ],
     ];
 

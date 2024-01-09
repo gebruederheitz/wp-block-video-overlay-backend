@@ -9,6 +9,7 @@
     $className    = get_query_var('className') ?? '';
     $type         = get_query_var('type');
     $embedUrl     = get_query_var('videoEmbedUrl');
+    $lazyLoadPreviewImage = get_query_var('lazyLoadPreviewImage');
 
     $classNames = [$className, 'ghwp-video', 'ghwp-video--' . $type];
 ?>
@@ -22,6 +23,7 @@
             <img
                 width="480"
                 height="270"
+                loading="<?= $lazyLoadPreviewImage ? 'lazy' : 'eager' ?>"
                 src="<?= $mediaURL ?>"
                 alt="<?= $mediaAltText ?>"
                 class="ghwp-video__thumb<?= $mediaID ? " wp-image-$mediaID" : '' ?>"
