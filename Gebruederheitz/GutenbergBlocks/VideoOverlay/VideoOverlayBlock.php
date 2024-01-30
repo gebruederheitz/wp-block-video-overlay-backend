@@ -20,7 +20,7 @@ class VideoOverlayBlock
      */
     public const HOOK_EMBED_TYPES = 'ghwp-embed-types';
 	
-	public const HOOK_CC_LANG_PREFS = 'ghwp-cc-lang-prefs'; // @todo: how and where to get the values?
+	public const HOOK_CC_LANG_PREFS = 'ghwp-cc-lang-prefs';
 
     public const HOOK_ATTRIBUTES = 'ghwp-video-overlay-attributes';
 
