@@ -9,7 +9,7 @@
     $className    = get_query_var('className') ?? '';
     $type         = get_query_var('type');
     $embedUrl     = get_query_var('videoEmbedUrl');
-    $ccPrefLang   = get_query_var('ccPrefLang');
+    $ccLangPref   = get_query_var('ccLangPref');
 
     $classNames = [$className, 'ghwp-video', 'ghwp-video--' . $type];
 ?>
@@ -34,7 +34,7 @@
             <iframe
                 <?= empty($providerType) ? 'src' : 'data-ghct-src' ?>="<?= $embedUrl ?>"
                 <?php if (!empty($providerType)) echo 'data-ghct-type="'. $providerType . '"'; ?>
-                <?php if (!empty($ccPrefLang)) echo 'cc_load_policy=1 cc_lang_pref="'. $ccPrefLang . '"'; ?>
+                <?php if (!empty($ccLangPref)) echo 'cc_load_policy=1 cc_lang_pref="'. $ccLangPref . '"'; ?>
             ></iframe>
             <?= PartialRenderer::render(__DIR__ . '/play-icon.php'); ?>
         </div>
