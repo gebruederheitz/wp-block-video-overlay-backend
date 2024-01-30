@@ -20,7 +20,7 @@ class VideoOverlayBlock
      */
     public const HOOK_EMBED_TYPES = 'ghwp-embed-types';
 	
-	public const HOOK_CC_LANG_PREFS = 'ghwp-cc-lang-prefs';
+    public const HOOK_CC_LANG_PREFS = 'ghwp-cc-lang-prefs';
 
     public const HOOK_ATTRIBUTES = 'ghwp-video-overlay-attributes';
 
@@ -123,10 +123,10 @@ class VideoOverlayBlock
             $locDat['embedTypes'] =
                 apply_filters(static::HOOK_EMBED_TYPES, []) ?: [];
         }
-		if (!isset($locDat['ccLangPrefs'])) {
-			$locDat['ccLangPrefs'] =
-				apply_filters(static::HOOK_CC_LANG_PREFS, []) ?: [];
-		}
+        if (!isset($locDat['ccLangPrefs'])) {
+            $locDat['ccLangPrefs'] =
+                apply_filters(static::HOOK_CC_LANG_PREFS, []) ?: [];
+        }
 
         return $locDat;
     }
