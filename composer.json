@@ -16,10 +16,13 @@
     ],
     "require": {
 	    "php": ">=7.3",
-        "gebruederheitz/wp-gutenberg-blocks": "~1.0",
+        "gebruederheitz/wp-gutenberg-blocks": "~1.6",
         "gebruederheitz/wp-simple-rest": "^2.0",
         "phpstan/phpstan": "^1.7",
-        "szepeviktor/phpstan-wordpress": "^1.1"
+        "szepeviktor/phpstan-wordpress": "^1.1",
+        "league/uri": "^6.7",
+        "league/uri-interfaces": "^2.3",
+        "league/uri-components": "^2.4"
     },
     "scripts": {
         "lint": "phpstan analyse -c .phpstan.neon"

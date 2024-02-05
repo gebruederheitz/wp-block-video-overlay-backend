@@ -19,18 +19,38 @@ class VideoOverlayBlock
      *              management solution.
      */
     public const HOOK_EMBED_TYPES = 'ghwp-embed-types';
-	
+
     public const HOOK_CC_LANG_PREFS = 'ghwp-cc-lang-prefs';
 
     public const HOOK_ATTRIBUTES = 'ghwp-video-overlay-attributes';
+
+    public const HOOK_VIDEO_URL = 'ghwp-video-overlay-video-url';
+
+    public const HOOK_TEMPLATE_PARTIAL = 'ghwp-video-overlay-template-partial';
+
+    public const HOOK_URL_TEMPLATES = 'ghwp-video-overlay-url-templates';
+
+    public const HOOK_RENDER_ATTRIBUTES = 'ghwp-video-overlay-render-attributes';
 
     /** @var DynamicBlock */
     protected $blockHandler;
 
     protected const ATTRIBUTES = [
+        'videoId' => [
+            'type' => 'string',
+            'default' => null,
+        ],
+        'videoProvider' => [
+            'type' => 'string',
+            'default' => null,
+        ],
         'videoUrl' => [
             'type' => 'string',
             'default' => null,
+        ],
+        'videoEmbedUrl' => [
+            'type' => 'string',
+            'default' => '',
         ],
         'mediaURL' => [
             'type' => 'string',
@@ -52,10 +72,6 @@ class VideoOverlayBlock
             'type' => 'string',
             'default' => 'overlay',
         ],
-        'videoEmbedUrl' => [
-            'type' => 'string',
-            'default' => '',
-        ],
         'lazyLoadPreviewImage' => [
             'type' => 'boolean',
             'default' => true,
@@ -72,7 +88,7 @@ class VideoOverlayBlock
         // Make sure an instance of BlockRegistrar exists
         BlockRegistrar::getInstance();
         new ImageSideloader();
-        $this->blockHandler = new DynamicBlock(
+        $this->blockHandler = new VideoOverlayBlockHandler(
             'ghwp/video-overlay',
             __DIR__ . '/../../../templates/video-overlay.php',
             $this->getAttributes($defaultEmbedProvider),

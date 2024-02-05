@@ -58,6 +58,26 @@ new VideoOverlayBlock(''); // Default: no consent management (src and no data-gh
 new VideoOverlayBlock('vimeo') // Default: 'vimeo' service (data-ghct-src and data-ghct-type="vimeo")
 ```
 
+
+### Enabling video captions
+
+Use the filter hook `HOOK_CC_LANG_PREFS` to provide an array of available
+languages on your site to allow editors to select a language preset for Youtube
+captions:
+
+```php
+add_filter(VideoOverlayBlock::HOOK_CC_LANG_PREFS, function ($languages) {
+    /* ... */
+    return [
+        ...$languages,
+        'en' => [
+            'displayName' => 'English',
+        ]  ,
+    ];
+});
+```
+
+
 ### Defining additional attributes
 
 Yes, there's a filter hook for that:
@@ -81,3 +101,16 @@ You can override the template used by the block by simply putting a file into
 `wp-content/themes/{your-theme}/template-parts/blocks/video-overlay.php`. The 
 block's attributes are accessible using `get_query_var('attributeName')`. Take 
 look at [the default template](templates/video-overlay.php) as an example.
+
+Alternatively you can filter & override the template partial path and gain even
+more control:
+
+```php
+add_filter(VideoOverlayBlock::HOOK_TEMPLATE_PARTIAL, function (string $partial, string $type, array $attributes) {
+    if ($type === 'overlay') {
+        return get_theme_file_path('templates/block/video/video-type-overlay.php');
+    }
+    
+    return $partial;
+}, 3);
+```

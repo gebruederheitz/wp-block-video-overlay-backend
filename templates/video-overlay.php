@@ -1,44 +1,73 @@
 <?php
     use Gebruederheitz\GutenbergBlocks\PartialRenderer;
 
-    $videoUrl     = get_query_var('videoUrl');
-    $mediaURL     = get_query_var('mediaURL');
-    $mediaID      = get_query_var('mediaID');
-    $mediaAltText = get_query_var('mediaAltText');
-    $providerType = get_query_var('providerType');
-    $className    = get_query_var('className') ?? '';
-    $type         = get_query_var('type');
-    $embedUrl     = get_query_var('videoEmbedUrl');
-    $ccLangPref   = get_query_var('ccLangPref');
-    $lazyLoadPreviewImage = get_query_var('lazyLoadPreviewImage');
+    // Values taken directly from attributes
+    $videoUrl                 = get_query_var('videoUrl');
+    $mediaURL                 = get_query_var('mediaURL');
+    $mediaID                  = get_query_var('mediaID');
+    $mediaAltText             = get_query_var('mediaAltText');
+    $type                     = get_query_var('type');
+    $lazyLoadPreviewImage     = get_query_var('lazyLoadPreviewImage');
 
-    $classNames = [$className, 'ghwp-video', 'ghwp-video--' . $type];
+    // Derived values
+    $classNames               = get_query_var('classNames') ?? [];
+    $srcAttributeName         = get_query_var('sourceAttributeName');
+    $consentProviderAttribute = get_query_var('consentProviderAttribute') ?? '';
+    $playIconPath             = get_query_var('playIconPath') ?? __DIR__.'/play-icon.php';
+    $setWidthAndHeight        = get_query_Var('setWidthAndHeight') ?? false;
+
+    if ($type === 'overlay') {
+        $image = null;
+        $imageClassName = 'ghwp-video__thumb';
+
+        if (!empty($mediaID)) {
+            $imageClassName .= ' wp-image-'. $mediaID;
+
+            $image = wp_get_attachment_image($mediaID, 'full', false, [
+                'class' => $imageClassName,
+                'alt' => $mediaAltText,
+                'width' => '480',
+                'height' => '270',
+                'loading' => $lazyLoadPreviewImage ? 'lazy' : 'eager',
+            ]);
+        }
+
+        $widthAndHeight = $setWidthAndHeight === false ? '' : 'width="480" height="270"';
+    }
 ?>
 <div class="<?= implode(' ', $classNames) ?>">
     <?php if ($type === 'overlay'): ?>
         <a
             class="ghwp-video-link"
-            <?= empty($providerType) ? 'href' : 'data-ghct-src' ?>="<?= $videoUrl ?>"
-            <?php if (!empty($providerType)) echo 'data-ghct-type="'. $providerType . '"'; ?>
+            <?= $srcAttributeName ?>="<?= $videoUrl ?>"
+            <?= $consentProviderAttribute ?>
         >
-            <img
-                width="480"
-                height="270"
-                loading="<?= $lazyLoadPreviewImage ? 'lazy' : 'eager' ?>"
-                src="<?= $mediaURL ?>"
-                alt="<?= $mediaAltText ?>"
-                class="ghwp-video__thumb<?= $mediaID ? " wp-image-$mediaID" : '' ?>"
-            />
-            <?= PartialRenderer::render(__DIR__ . '/play-icon.php'); ?>
+            <?php
+                if ($image) {
+                    echo $image;
+                } elseif (!empty($mediaURL)) {
+                    ?>
+                        <img
+                            width="480"
+                            height="270"
+                            loading="<?= $lazyLoadPreviewImage ? 'lazy' : 'eager' ?>"
+                            src="<?= $mediaURL ?>"
+                            alt="<?= $mediaAltText ?>"
+                            class="<?= $imageClassName ?>"
+                            <?= $widthAndHeight ?>
+                        />
+                    <?php
+                }
+            ?>
+            <?php PartialRenderer::renderInclude($playIconPath); ?>
         </a>
     <?php elseif ($type === 'inline'): ?>
         <div class="ghwp-video-image" style='background-image: url("<?= $mediaURL ?>");'>
             <iframe
-                <?= empty($providerType) ? 'src' : 'data-ghct-src' ?>="<?= $embedUrl ?>"
-                <?php if (!empty($providerType)) echo 'data-ghct-type="'. $providerType . '"'; ?>
-                <?php if (!empty($ccLangPref)) echo 'cc_load_policy=1 cc_lang_pref="'. $ccLangPref . '"'; ?>
+                <?= $srcAttributeName ?>="<?= $videoUrl ?>"
+                <?= $consentProviderAttribute ?>
             ></iframe>
-            <?= PartialRenderer::render(__DIR__ . '/play-icon.php'); ?>
+            <?php PartialRenderer::renderInclude($playIconPath); ?>
         </div>
     <?php endif; ?>
 </div>
