@@ -19,23 +19,14 @@ class VideoOverlayBlockSettings extends AbstractCustomizerSettingsHandler
         return PrivacyModeCustomizerSetting::getValue();
     }
 
-    public function __construct()
+    public static function register(): void
     {
-        parent::__construct();
         add_filter(
             VideoOverlayBlock::HOOK_URL_TEMPLATES,
-            [$this, 'onFilterUrlTemplates'],
+            [self::class, 'onFilterUrlTemplates'],
             10,
             2,
         );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function getSettings(): array
-    {
-        return [new PrivacyModeCustomizerSetting()];
     }
 
     /**
@@ -43,18 +34,18 @@ class VideoOverlayBlockSettings extends AbstractCustomizerSettingsHandler
      * @param array<string, mixed> $attributes
      * @return array<string, array<string, string>>
      */
-    public function onFilterUrlTemplates(
+    public static function onFilterUrlTemplates(
         array $templates,
         array $attributes
     ): array {
         $privacyMode = self::getPrivacyMode();
 
         if ($privacyMode === PrivacyMode::ALWAYS) {
-            $this->replaceUrlTemplate($templates);
+            self::replaceUrlTemplate($templates);
         } elseif ($privacyMode === PrivacyMode::SELECT) {
             $usePM = $attributes['usePrivacyMode'] ?? false;
             if ($usePM) {
-                $this->replaceUrlTemplate($templates);
+                self::replaceUrlTemplate($templates);
             }
         }
 
@@ -64,9 +55,17 @@ class VideoOverlayBlockSettings extends AbstractCustomizerSettingsHandler
     /**
      * @param array<string, array<string, string>> $templates
      */
-    protected function replaceUrlTemplate(array &$templates): void
+    protected static function replaceUrlTemplate(array &$templates): void
     {
         $templates['youtube']['inline'] =
             'https://www.youtube-nocookie.com/embed/{videoId}';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getSettings(): array
+    {
+        return [new PrivacyModeCustomizerSetting()];
     }
 }
