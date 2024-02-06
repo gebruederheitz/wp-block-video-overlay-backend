@@ -22,7 +22,8 @@
         "szepeviktor/phpstan-wordpress": "^1.1",
         "league/uri": "^7.3",
         "league/uri-interfaces": "^7.3",
-        "league/uri-components": "^7.3"
+        "league/uri-components": "^7.3",
+        "gebruederheitz/wp-easy-customizer": "^2.1"
     },
     "scripts": {
         "lint": "phpstan analyse -c .phpstan.neon"

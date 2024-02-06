@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd65ac942b6ad7afb3ff55629f37e015",
+    "content-hash": "a2c85a41fdbf67f93f3caa5a580169bb",
     "packages": [
         {
             "name": "gebruederheitz/simple-singleton",
@@ -49,6 +49,50 @@
                 "source": "https://github.com/gebruederheitz/simple-singleton/tree/v1.0.1"
             },
             "time": "2022-02-08T19:07:25+00:00"
+        },
+        {
+            "name": "gebruederheitz/wp-easy-customizer",
+            "version": "v2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gebruederheitz/wp-easy-customizer.git",
+                "reference": "3e8ea3ddfa15b7b332af7a810a0c75422da8c755"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gebruederheitz/wp-easy-customizer/zipball/3e8ea3ddfa15b7b332af7a810a0c75422da8c755",
+                "reference": "3e8ea3ddfa15b7b332af7a810a0c75422da8c755",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "szepeviktor/phpstan-wordpress": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gebruederheitz\\Wordpress\\Customizer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Maros",
+                    "email": "andreas.maros@gebruederheitz.de"
+                }
+            ],
+            "description": "A simplified, object-oriented interface for the Wordpress Customizer.",
+            "support": {
+                "issues": "https://github.com/gebruederheitz/wp-easy-customizer/issues",
+                "source": "https://github.com/gebruederheitz/wp-easy-customizer/tree/v2.1.3"
+            },
+            "time": "2022-08-28T10:28:03+00:00"
         },
         {
             "name": "gebruederheitz/wp-gutenberg-blocks",

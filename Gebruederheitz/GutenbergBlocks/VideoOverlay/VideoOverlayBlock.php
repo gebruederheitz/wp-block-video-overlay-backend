@@ -4,6 +4,8 @@ namespace Gebruederheitz\GutenbergBlocks\VideoOverlay;
 
 use Gebruederheitz\GutenbergBlocks\BlockRegistrar;
 use Gebruederheitz\GutenbergBlocks\DynamicBlock;
+use Gebruederheitz\GutenbergBlocks\VideoOverlay\Util\Customizer\Enum\PrivacyMode;
+use Gebruederheitz\GutenbergBlocks\VideoOverlay\Util\Customizer\VideoOverlayBlockSettings;
 use Gebruederheitz\Wordpress\Rest\Traits\withREST;
 
 class VideoOverlayBlock
@@ -76,6 +78,10 @@ class VideoOverlayBlock
             'type' => 'boolean',
             'default' => true,
         ],
+        'usePrivacyMode' => [
+            'type' => 'boolean',
+            'default' => false,
+        ],
     ];
 
     protected const REQUIRED_ATTRIBUTES = ['videoUrl'];
@@ -147,6 +153,8 @@ class VideoOverlayBlock
             $locDat['ccLangPrefs'] =
                 apply_filters(static::HOOK_CC_LANG_PREFS, []) ?: [];
         }
+        $locDat['privacyModeOption'] =
+            VideoOverlayBlockSettings::getPrivacyMode() === PrivacyMode::SELECT;
 
         return $locDat;
     }

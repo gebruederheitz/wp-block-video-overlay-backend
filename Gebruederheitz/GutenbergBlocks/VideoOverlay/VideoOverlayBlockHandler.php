@@ -46,6 +46,7 @@ class VideoOverlayBlockHandler extends DynamicBlock
             $templates = apply_filters(
                 VideoOverlayBlock::HOOK_URL_TEMPLATES,
                 self::URL_TEMPLATES,
+                $attributes,
             );
             $template = new UriTemplate($templates[$provider][$type] ?? '');
             $url = $template->expand(['videoId' => $videoId]);
