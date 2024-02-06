@@ -14,7 +14,7 @@
     $srcAttributeName         = get_query_var('sourceAttributeName');
     $consentProviderAttribute = get_query_var('consentProviderAttribute') ?? '';
     $playIconPath             = get_query_var('playIconPath') ?? __DIR__.'/play-icon.php';
-    $setWidthAndHeight        = get_query_Var('setWidthAndHeight') ?? false;
+    $setWidthAndHeight        = get_query_var('setWidthAndHeight') ?? false;
 
     if ($type === 'overlay') {
         $image = null;
