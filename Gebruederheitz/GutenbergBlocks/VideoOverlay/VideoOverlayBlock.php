@@ -15,6 +15,9 @@ class VideoOverlayBlock
      * in ImageSideloader if it has not been used elsewhere before
      */
     use withREST;
+
+    public const BLOCK_NAME = 'ghwp/video-overlay';
+
     /**
      * @hook ghwp-embed-types
      * @description An array of possible embed types for use with a consent
@@ -95,7 +98,7 @@ class VideoOverlayBlock
         BlockRegistrar::getInstance();
         new ImageSideloader();
         $this->blockHandler = new VideoOverlayBlockHandler(
-            'ghwp/video-overlay',
+            self::BLOCK_NAME,
             __DIR__ . '/../../../templates/video-overlay.php',
             $this->getAttributes($defaultEmbedProvider),
             self::REQUIRED_ATTRIBUTES,
@@ -154,7 +157,9 @@ class VideoOverlayBlock
                 apply_filters(static::HOOK_CC_LANG_PREFS, []) ?: [];
         }
         $locDat['privacyModeOption'] =
-            VideoOverlayBlockSettings::getPrivacyMode() === PrivacyMode::SELECT;
+            VideoOverlayBlockSettings::getPrivacyMode() === PrivacyMode::SELECT
+                ? 'true'
+                : 'false';
 
         return $locDat;
     }

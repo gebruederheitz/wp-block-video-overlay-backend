@@ -31,6 +31,11 @@ class VideoOverlayBlockHandler extends DynamicBlock
      */
     public function renderBlock(array $attributes = [], string $content = '')
     {
+        $attributes = apply_filters(
+            DynamicBlock::HOOK_FILTER_BLOCK_TYPE_ATTRIBUTES . $this->name,
+            $attributes,
+        );
+
         if (!$this->requiredAttributesArePresent($attributes)) {
             return null;
         }
