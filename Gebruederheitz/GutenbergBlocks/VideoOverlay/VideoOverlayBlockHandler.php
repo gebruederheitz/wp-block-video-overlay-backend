@@ -90,11 +90,11 @@ class VideoOverlayBlockHandler extends DynamicBlock
         $consentProviderType = $attributes['providerType'];
 
         // Prepare the source attribute's name (href, src, data-ghct-src etc.)
-        $srcAttributeName = (!empty($consentProviderType)
-                ? 'data-ghct-src'
-                : $type === 'inline')
-            ? 'href'
-            : 'src';
+        $srcAttributeName = !empty($consentProviderType)
+            ? 'data-ghct-src'
+            : ($type === 'inline'
+                ? 'src'
+                : 'href');
         $attributes['sourceAttributeName'] = $srcAttributeName;
 
         // Prepare the additional consent management provider type attribute
