@@ -4,6 +4,8 @@ namespace Gebruederheitz\GutenbergBlocks\VideoOverlay;
 
 use Gebruederheitz\GutenbergBlocks\BlockRegistrar;
 use Gebruederheitz\GutenbergBlocks\DynamicBlock;
+use Gebruederheitz\GutenbergBlocks\VideoOverlay\Util\Customizer\Enum\PrivacyMode;
+use Gebruederheitz\GutenbergBlocks\VideoOverlay\Util\Customizer\VideoOverlayBlockSettings;
 use Gebruederheitz\Wordpress\Rest\Traits\withREST;
 
 class VideoOverlayBlock
@@ -13,6 +15,9 @@ class VideoOverlayBlock
      * in ImageSideloader if it has not been used elsewhere before
      */
     use withREST;
+
+    public const BLOCK_NAME = 'ghwp/video-overlay';
+
     /**
      * @hook ghwp-embed-types
      * @description An array of possible embed types for use with a consent
@@ -20,15 +25,37 @@ class VideoOverlayBlock
      */
     public const HOOK_EMBED_TYPES = 'ghwp-embed-types';
 
+    public const HOOK_CC_LANG_PREFS = 'ghwp-cc-lang-prefs';
+
     public const HOOK_ATTRIBUTES = 'ghwp-video-overlay-attributes';
+
+    public const HOOK_VIDEO_URL = 'ghwp-video-overlay-video-url';
+
+    public const HOOK_TEMPLATE_PARTIAL = 'ghwp-video-overlay-template-partial';
+
+    public const HOOK_URL_TEMPLATES = 'ghwp-video-overlay-url-templates';
+
+    public const HOOK_RENDER_ATTRIBUTES = 'ghwp-video-overlay-render-attributes';
 
     /** @var DynamicBlock */
     protected $blockHandler;
 
     protected const ATTRIBUTES = [
+        'videoId' => [
+            'type' => 'string',
+            'default' => null,
+        ],
+        'videoProvider' => [
+            'type' => 'string',
+            'default' => null,
+        ],
         'videoUrl' => [
             'type' => 'string',
             'default' => null,
+        ],
+        'videoEmbedUrl' => [
+            'type' => 'string',
+            'default' => '',
         ],
         'mediaURL' => [
             'type' => 'string',
@@ -50,13 +77,13 @@ class VideoOverlayBlock
             'type' => 'string',
             'default' => 'overlay',
         ],
-        'videoEmbedUrl' => [
-            'type' => 'string',
-            'default' => '',
-        ],
         'lazyLoadPreviewImage' => [
             'type' => 'boolean',
             'default' => true,
+        ],
+        'usePrivacyMode' => [
+            'type' => 'boolean',
+            'default' => false,
         ],
     ];
 
@@ -70,8 +97,8 @@ class VideoOverlayBlock
         // Make sure an instance of BlockRegistrar exists
         BlockRegistrar::getInstance();
         new ImageSideloader();
-        $this->blockHandler = new DynamicBlock(
-            'ghwp/video-overlay',
+        $this->blockHandler = new VideoOverlayBlockHandler(
+            self::BLOCK_NAME,
             __DIR__ . '/../../../templates/video-overlay.php',
             $this->getAttributes($defaultEmbedProvider),
             self::REQUIRED_ATTRIBUTES,
@@ -125,6 +152,14 @@ class VideoOverlayBlock
             $locDat['embedTypes'] =
                 apply_filters(static::HOOK_EMBED_TYPES, []) ?: [];
         }
+        if (!isset($locDat['ccLangPrefs'])) {
+            $locDat['ccLangPrefs'] =
+                apply_filters(static::HOOK_CC_LANG_PREFS, []) ?: [];
+        }
+        $locDat['privacyModeOption'] =
+            VideoOverlayBlockSettings::getPrivacyMode() === PrivacyMode::SELECT
+                ? 'true'
+                : 'false';
 
         return $locDat;
     }

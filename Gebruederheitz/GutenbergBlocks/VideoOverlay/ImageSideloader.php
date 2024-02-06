@@ -19,6 +19,7 @@ class ImageSideloader
     }
 
     /**
+     * @param \WP_REST_Request<array<mixed>> $request
      * @return array<string, string>
      */
     public function restSideload(\WP_REST_Request $request): array
