@@ -15,14 +15,14 @@
         }
     ],
     "require": {
-	    "php": ">=7.3",
+	    "php": ">=8.1",
         "gebruederheitz/wp-gutenberg-blocks": "~1.6",
         "gebruederheitz/wp-simple-rest": "^2.0",
         "phpstan/phpstan": "^1.7",
         "szepeviktor/phpstan-wordpress": "^1.1",
-        "league/uri": "^6.7",
-        "league/uri-interfaces": "^2.3",
-        "league/uri-components": "^2.4"
+        "league/uri": "^7.3",
+        "league/uri-interfaces": "^7.3",
+        "league/uri-components": "^7.3"
     },
     "scripts": {
         "lint": "phpstan analyse -c .phpstan.neon"
