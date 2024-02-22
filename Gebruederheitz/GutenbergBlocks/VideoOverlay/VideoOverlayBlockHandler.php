@@ -74,7 +74,7 @@ class VideoOverlayBlockHandler extends DynamicBlock
 
             $attributes['videoUrl'] = (string) $url;
         } else {
-            if ($type === 'overlay' && !empty($attributes['videoEmbedUrl'])) {
+            if ($type === 'inline' && !empty($attributes['videoEmbedUrl'])) {
                 $attributes['videoUrl'] = $attributes['videoEmbedUrl'];
             }
         }
