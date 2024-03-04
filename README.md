@@ -62,20 +62,19 @@ new VideoOverlayBlock('vimeo') // Default: 'vimeo' service (data-ghct-src and da
 ### Enabling video captions
 
 Use the filter hook `HOOK_CC_LANG_PREFS` to provide an array of available
-languages on your site to allow editors to select a language preset for Youtube
+languages on your site to allow editors to input a language preset for Youtube
 captions:
 
 ```php
-add_filter(VideoOverlayBlock::HOOK_CC_LANG_PREFS, function ($languages) {
+add_filter(VideoOverlayBlock::HOOK_CC_LANG_PREFS, function ($enabled) {
     /* ... */
-    return [
-        ...$languages,
-        'en' => [
-            'displayName' => 'English',
-        ]  ,
-    ];
+    return true;
 });
 ```
+
+Editors may input a string in the Block Editor representing a language or locale
+slug (like "en", "en-GB", "en-US", "fr", "de-DE" etc.). The input is sanitized
+to only allow alphanumeric characters, dashes and underscores.
 
 
 ### Defining additional attributes

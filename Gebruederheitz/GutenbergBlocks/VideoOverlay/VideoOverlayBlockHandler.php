@@ -57,8 +57,13 @@ class VideoOverlayBlockHandler extends DynamicBlock
             $url = $template->expand(['videoId' => $videoId]);
 
             if (!empty($attributes['ccLangPref'])) {
+                $userProvidedSlug = $attributes['ccLangPref'];
+                $saneLangPrefSlug = $this->sanitizeCcLangPref(
+                    $userProvidedSlug,
+                );
+
                 $query = Query::createFromUri($url)
-                    ->appendTo('cc_lang_pref', $attributes['ccLangPref'])
+                    ->appendTo('cc_lang_pref', $saneLangPrefSlug)
                     ->appendTo('cc_load_policy', '1');
                 $url = $url->withQuery($query->__toString());
             }
@@ -130,5 +135,12 @@ class VideoOverlayBlockHandler extends DynamicBlock
             $content,
             $this->templateOverridePath,
         );
+    }
+
+    private function sanitizeCcLangPref(string $userProvidedSlug = ''): string
+    {
+        // WP built-in since 6.2.1, basically limits
+        // a string to A-Z, a-z, 0-9, '_', '-'.
+        return sanitize_locale_name($userProvidedSlug);
     }
 }

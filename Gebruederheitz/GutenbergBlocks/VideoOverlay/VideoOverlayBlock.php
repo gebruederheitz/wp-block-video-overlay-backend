@@ -153,8 +153,12 @@ class VideoOverlayBlock
                 apply_filters(static::HOOK_EMBED_TYPES, []) ?: [];
         }
         if (!isset($locDat['ccLangPrefs'])) {
-            $locDat['ccLangPrefs'] =
-                apply_filters(static::HOOK_CC_LANG_PREFS, []) ?: [];
+            $locDat['ccLangPrefs'] = apply_filters(
+                static::HOOK_CC_LANG_PREFS,
+                false,
+            )
+                ? 'true'
+                : 'false';
         }
         $locDat['privacyModeOption'] =
             VideoOverlayBlockSettings::getPrivacyMode() === PrivacyMode::SELECT
