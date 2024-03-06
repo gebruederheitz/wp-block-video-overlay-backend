@@ -16,7 +16,7 @@ class VideoOverlayBlockSettings extends AbstractCustomizerSettingsHandler
      */
     public static function getPrivacyMode(): string
     {
-        return PrivacyModeCustomizerSetting::getValue();
+        return PrivacyModeCustomizerSetting::get()->getValue();
     }
 
     public static function register(): void
@@ -64,8 +64,8 @@ class VideoOverlayBlockSettings extends AbstractCustomizerSettingsHandler
     /**
      * @inheritDoc
      */
-    protected function getSettings(): array
+    public function getSettings(): array
     {
-        return [new PrivacyModeCustomizerSetting()];
+        return [PrivacyModeCustomizerSetting::get()];
     }
 }
