@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4cd8ef91bd3114430187b6beef8039d",
+    "content-hash": "b94e7f7473e510a892b1d054b20d947b",
     "packages": [
         {
             "name": "gebruederheitz/simple-singleton",
@@ -52,16 +52,16 @@
         },
         {
             "name": "gebruederheitz/wp-easy-customizer",
-            "version": "v3.0.0-beta.1",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gebruederheitz/wp-easy-customizer.git",
-                "reference": "fff3447e90c9617028c3ac01249a7cba82485d94"
+                "reference": "b3c289ceca68ad873ac6d4b88dc71298c1fb015a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gebruederheitz/wp-easy-customizer/zipball/fff3447e90c9617028c3ac01249a7cba82485d94",
-                "reference": "fff3447e90c9617028c3ac01249a7cba82485d94",
+                "url": "https://api.github.com/repos/gebruederheitz/wp-easy-customizer/zipball/b3c289ceca68ad873ac6d4b88dc71298c1fb015a",
+                "reference": "b3c289ceca68ad873ac6d4b88dc71298c1fb015a",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "description": "A simplified, object-oriented interface for the Wordpress Customizer.",
             "support": {
                 "issues": "https://github.com/gebruederheitz/wp-easy-customizer/issues",
-                "source": "https://github.com/gebruederheitz/wp-easy-customizer/tree/v3.0.0-beta.1"
+                "source": "https://github.com/gebruederheitz/wp-easy-customizer/tree/v3.0.0"
             },
-            "time": "2024-03-06T09:12:21+00:00"
+            "time": "2024-03-06T16:10:04+00:00"
         },
         {
             "name": "gebruederheitz/wp-gutenberg-blocks",
@@ -1023,9 +1023,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "gebruederheitz/wp-easy-customizer": 10
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
