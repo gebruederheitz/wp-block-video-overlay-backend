@@ -8,7 +8,7 @@ use Gebruederheitz\GutenbergBlocks\VideoOverlay\Util\Customizer\Enum\PrivacyMode
 use Gebruederheitz\Wordpress\Customizer\BasicCustomizerSetting;
 
 /**
- * @extends BasicCustomizerSetting<string>
+ * @extends BasicCustomizerSetting<'none'|'select'|'always'>
  */
 class PrivacyModeCustomizerSetting extends BasicCustomizerSetting
 {

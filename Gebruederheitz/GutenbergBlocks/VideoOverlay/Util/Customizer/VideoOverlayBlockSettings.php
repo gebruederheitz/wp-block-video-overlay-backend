@@ -61,9 +61,6 @@ class VideoOverlayBlockSettings extends AbstractCustomizerSettingsHandler
             'https://www.youtube-nocookie.com/embed/{videoId}';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getSettings(): array
     {
         return [PrivacyModeCustomizerSetting::get()];

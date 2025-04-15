@@ -8,6 +8,10 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
 use Gebruederheitz\Wordpress\Rest\Traits\withREST;
+use WP_Error;
+use WP_REST_Request;
+use function media_sideload_image;
+use function wp_get_attachment_url;
 
 class ImageSideloader
 {
@@ -19,12 +23,15 @@ class ImageSideloader
     }
 
     /**
-     * @param \WP_REST_Request<array<mixed>> $request
-     * @return array<string, string>
+     * @param WP_REST_Request<array<mixed>> $request
+     * @return array<string, string|int>
      */
-    public function restSideload(\WP_REST_Request $request): array
+    public function restSideload(WP_REST_Request $request): array
     {
         $url = $request->get_param('imageUrl');
+        if (!is_string($url)) {
+            $url = $url . '';
+        }
         [$mediaId, $mediaUrl] = $this->sideload($url);
 
         return [
@@ -71,12 +78,23 @@ class ImageSideloader
     }
 
     /**
-     * @return array{0: string, 1: string}
+     * @return array{0: int, 1: string}
      */
     private function sideload(string $imageUrl): array
     {
-        $mediaId = \media_sideload_image($imageUrl, null, null, 'id');
-        $mediaUrl = \wp_get_attachment_url($mediaId);
+        /** @var int|WP_Error $mediaId */
+        $mediaId = media_sideload_image($imageUrl, null, null, 'id');
+
+        if (is_wp_error($mediaId)) {
+            $mediaId = 0;
+            $mediaUrl = '';
+        } else {
+            $mediaUrl = wp_get_attachment_url($mediaId);
+
+            if (!$mediaUrl) {
+                $mediaUrl = '';
+            }
+        }
 
         return [$mediaId, $mediaUrl];
     }
