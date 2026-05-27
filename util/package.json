@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/gebruederheitz/wp-block-video-overlay-backend#readme",
   "dependencies": {
-    "@prettier/plugin-php": "^0.22.4",
-    "prettier": "^3.5.3",
-    "release-it": "^18.1.2"
+    "@prettier/plugin-php": "^0.25.0",
+    "prettier": "^3.8.3",
+    "release-it": "^20.0.1"
   }
 }
