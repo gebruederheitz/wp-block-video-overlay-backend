@@ -1,6 +1,6 @@
 {
   "name": "@gebruederheitz/wp-block-video-overlay-backend-util",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Utilities for the gebruederheitz/wp-block-video-overlay-backend PHP composer package",
   "main": "",
   "engines": {
