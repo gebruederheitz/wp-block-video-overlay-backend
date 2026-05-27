@@ -30,7 +30,7 @@ class ImageSideloader
     {
         $url = $request->get_param('imageUrl');
         if (!is_string($url)) {
-            $url = $url . '';
+            $url = strval($url);
         }
         [$mediaId, $mediaUrl] = $this->sideload($url);
 

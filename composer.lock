@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "415259e218bd38d467e688cfb7fd3fea",
+    "content-hash": "b6103f58de1d306b4438e38cb431b489",
     "packages": [
         {
             "name": "gebruederheitz/simple-singleton",
