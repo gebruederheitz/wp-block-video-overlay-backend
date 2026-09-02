@@ -15,10 +15,10 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
-        "gebruederheitz/wp-easy-customizer": "^v3.1.7",
+        "php": ">=8.2",
+        "gebruederheitz/wp-easy-customizer": "^3.1.7 || ^4.0",
         "gebruederheitz/wp-gutenberg-blocks": "~1.8|~2.0",
-        "gebruederheitz/wp-simple-rest": "~3.0",
+        "gebruederheitz/wp-simple-rest": "~3.0 || ~4.0",
         "league/uri": "^7.8",
         "league/uri-interfaces": "^7.8",
         "league/uri-components": "^7.8"
@@ -27,11 +27,15 @@
         "phpstan/phpstan": "^2.1.56",
         "szepeviktor/phpstan-wordpress": "^v2.0.3",
         "wecodemore/wpstarter": "~2.0",
-        "johnpbloch/wordpress-core": "6.9.*@stable"
+        "johnpbloch/wordpress-core": "6.9.*@stable",
+        "phpunit/phpunit": "^9.6"
     },
     "config": {
         "allow-plugins": {
             "johnpbloch/wordpress-core-installer": true
+        },
+        "platform": {
+            "php": "8.2.0"
         }
     },
     "extra": {
@@ -39,6 +43,7 @@
         "wordpress-install-dir": ".wp/wordpress"
     },
     "scripts": {
-        "lint": "phpstan --memory-limit=2G analyse -c .phpstan.neon"
+        "lint": "phpstan --memory-limit=2G analyse -c .phpstan.neon",
+        "test": "phpunit"
     }
 }
