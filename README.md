@@ -112,12 +112,20 @@ You can override the template used by the block by simply putting a file into
 block's attributes are accessible using `get_query_var('attributeName')`. Take 
 look at [the default template](templates/video-overlay.php) as an example.
 
-The attribute values reach your template as editors entered them. Escape every
-value for where you print it, as the default template does: `esc_url()` for
-URLs (including inside an inline `style`), `esc_attr()` for other attribute
-values. Otherwise any account that can edit posts, Authors and Contributors
-included, can inject scripts into the page. If your template is a copy of the
-default one from before 5.0.1, add the escaping there too.
+Before filters and templates see them, the block sanitises the attributes
+editors control: `videoUrl`, `videoEmbedUrl` and `mediaURL` with
+`sanitize_url()` (no quotes, whitespace or `javascript:` URLs), `mediaID` to an
+integer, `className` and `type` to class characters, and `providerType` to
+letters, digits, `_`, `-`, `.` and `:`. Other attributes, `mediaAltText` and
+`videoId` among them, arrive as editors entered them.
+
+Sanitised values are still not safe to print everywhere: a URL may contain a
+single quote, for example. Escape every value for where you print it, as the
+default template does: `esc_url()` for URLs (including inside an inline
+`style`), `esc_attr()` for other attribute values. Otherwise any account that
+can edit posts, Authors and Contributors included, can inject scripts into the
+page. If your template is a copy of the default one from before 5.0.1, add the
+escaping there too.
 
 Alternatively you can filter & override the template partial path and gain even
 more control:

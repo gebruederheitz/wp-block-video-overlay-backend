@@ -31,6 +31,8 @@ class VideoOverlayBlockHandler extends DynamicBlock
      */
     public function renderBlock(array $attributes = [], string $content = '')
     {
+        $attributes = $this->sanitizeAttributes($attributes);
+
         $attributes = apply_filters(
             DynamicBlock::HOOK_FILTER_BLOCK_TYPE_ATTRIBUTES . $this->name,
             $attributes,
@@ -135,6 +137,73 @@ class VideoOverlayBlockHandler extends DynamicBlock
             $content,
             $this->templateOverridePath,
         );
+    }
+
+    /**
+     * Reduces the attributes editors control to valid data for their type,
+     * before filters and templates see them. Templates must still escape:
+     * this only limits what an override that forgets to can print.
+     *
+     * @param array<string, mixed> $attributes
+     * @return array<string, mixed>
+     */
+    private function sanitizeAttributes(array $attributes): array
+    {
+        foreach (['videoUrl', 'videoEmbedUrl', 'mediaURL'] as $name) {
+            if (array_key_exists($name, $attributes)) {
+                $attributes[$name] = sanitize_url(
+                    $this->toString($attributes[$name]),
+                );
+            }
+        }
+
+        if (array_key_exists('mediaID', $attributes)) {
+            $attributes['mediaID'] = is_scalar($attributes['mediaID'])
+                ? (int) $attributes['mediaID']
+                : 0;
+        }
+
+        if (array_key_exists('className', $attributes)) {
+            $classes =
+                preg_split(
+                    '/\s+/',
+                    $this->toString($attributes['className']),
+                    -1,
+                    PREG_SPLIT_NO_EMPTY,
+                ) ?:
+                [];
+            $attributes['className'] = implode(
+                ' ',
+                array_filter(
+                    array_map('sanitize_html_class', $classes),
+                    fn(string $class) => $class !== '',
+                ),
+            );
+        }
+
+        if (array_key_exists('type', $attributes)) {
+            $attributes['type'] = sanitize_html_class(
+                $this->toString($attributes['type']),
+            );
+        }
+
+        // Consent service IDs are case-sensitive and not otherwise
+        // restricted, so keep identifier characters instead of using
+        // sanitize_key(), which lowercases.
+        if (array_key_exists('providerType', $attributes)) {
+            $attributes['providerType'] = (string) preg_replace(
+                '/[^A-Za-z0-9_.:-]/',
+                '',
+                $this->toString($attributes['providerType']),
+            );
+        }
+
+        return $attributes;
+    }
+
+    private function toString(mixed $value): string
+    {
+        return is_scalar($value) ? (string) $value : '';
     }
 
     private function sanitizeCcLangPref(string $userProvidedSlug = ''): string

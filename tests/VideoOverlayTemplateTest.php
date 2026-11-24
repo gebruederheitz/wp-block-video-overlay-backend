@@ -5,13 +5,17 @@ namespace Gebruederheitz\GutenbergBlocks\VideoOverlay\Tests;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
-use Gebruederheitz\GutenbergBlocks\VideoOverlay\VideoOverlayBlockHandler;
+use Gebruederheitz\GutenbergBlocks\PartialRenderer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Renders the default template (templates/video-overlay.php) through
- * VideoOverlayBlockHandler::renderBlock() and checks the HTML structure, so
- * attribute values can't inject elements, attributes or script URLs.
+ * Renders the default template (templates/video-overlay.php) with raw values
+ * and checks the HTML structure, so attribute values can't inject elements,
+ * attributes or script URLs.
+ *
+ * The template is rendered directly, with data shaped like the handler's,
+ * because VideoOverlayBlockHandler sanitises attributes first (see
+ * VideoOverlayAttributeSanitizingTest). This tests the template's own escaping.
  *
  * esc_url() and esc_attr() are stubs modelled on WordPress core (see
  * tests/bootstrap.php): these tests pin that every value is escaped for its
@@ -44,19 +48,25 @@ class VideoOverlayTemplateTest extends TestCase
      */
     private function render(array $attributes): DOMXPath
     {
-        $handler = new VideoOverlayBlockHandler(
-            'ghwp/video-overlay',
-            __DIR__ . '/../templates/video-overlay.php',
-            [],
-            ['videoUrl'],
-        );
+        $type = $attributes['type'];
 
-        $html = $handler->renderBlock($attributes + [
-            'videoUrl' => 'https://www.youtube.com/watch?v=abc123',
-            'mediaURL' => 'https://example.com/preview.jpg',
-            'mediaAltText' => 'Preview',
-            'providerType' => '',
-        ]);
+        $html = PartialRenderer::render(
+            __DIR__ . '/../templates/video-overlay.php',
+            $attributes + [
+                'videoUrl' => 'https://www.youtube.com/watch?v=abc123',
+                'mediaURL' => 'https://example.com/preview.jpg',
+                'mediaAltText' => 'Preview',
+                'classNames' => [
+                    $attributes['className'] ?? '',
+                    'ghwp-video',
+                    'ghwp-video--' . $type,
+                ],
+                'sourceAttributeName' => $type === 'inline' ? 'src' : 'href',
+                'consentProviderAttribute' => '',
+                'playIconPath' => __DIR__ . '/../templates/play-icon.php',
+                'setWidthAndHeight' => true,
+            ],
+        );
         $this->assertIsString($html);
 
         $document = new DOMDocument();
@@ -100,16 +110,10 @@ class VideoOverlayTemplateTest extends TestCase
                 "$type: className injects an element" => [
                     ['type' => $type, 'className' => '"><script>alert(1)</script>'],
                 ],
-                "$type: providerType breaks out of its attribute" => [
-                    ['type' => $type, 'providerType' => 'youtube' . self::BREAKOUT],
-                ],
             ];
         }
 
         return $rows + [
-            'inline: videoEmbedUrl breaks out of its attribute' => [
-                ['type' => 'inline', 'videoEmbedUrl' => 'https://example.com/embed' . self::BREAKOUT],
-            ],
             'inline: mediaURL breaks out of the CSS url()' => [
                 ['type' => 'inline', 'mediaURL' => 'https://example.com/a.jpg");background:url("https://evil.example/x'],
             ],
@@ -165,7 +169,8 @@ class VideoOverlayTemplateTest extends TestCase
             'type' => 'overlay',
             'className' => 'is-style-wide',
             'videoUrl' => 'https://www.youtube.com/watch?v=abc123&t=10',
-            'providerType' => 'youtube',
+            'sourceAttributeName' => 'data-ghct-src',
+            'consentProviderAttribute' => 'data-ghct-type="youtube"',
             'mediaID' => 42,
         ]);
 
