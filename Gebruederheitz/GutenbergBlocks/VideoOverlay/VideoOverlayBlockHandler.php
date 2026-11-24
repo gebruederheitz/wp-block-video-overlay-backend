@@ -62,7 +62,7 @@ class VideoOverlayBlockHandler extends DynamicBlock
                     $userProvidedSlug,
                 );
 
-                $query = Query::createFromUri($url)
+                $query = Query::fromUri($url)
                     ->appendTo('cc_lang_pref', $saneLangPrefSlug)
                     ->appendTo('cc_load_policy', '1');
                 $url = $url->withQuery($query->__toString());
