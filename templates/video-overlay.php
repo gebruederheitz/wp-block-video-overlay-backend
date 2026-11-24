@@ -4,7 +4,7 @@
     // Values taken directly from attributes
     $videoUrl                 = get_query_var('videoUrl');
     $mediaURL                 = get_query_var('mediaURL');
-    $mediaID                  = get_query_var('mediaID');
+    $mediaID                  = (int) get_query_var('mediaID');
     $mediaAltText             = get_query_var('mediaAltText');
     $type                     = get_query_var('type');
     $lazyLoadPreviewImage     = get_query_var('lazyLoadPreviewImage');
@@ -35,11 +35,11 @@
         $widthAndHeight = $setWidthAndHeight === false ? '' : 'width="480" height="270"';
     }
 ?>
-<div class="<?= implode(' ', $classNames) ?>">
+<div class="<?= esc_attr(implode(' ', $classNames)) ?>">
     <?php if ($type === 'overlay'): ?>
         <a
             class="ghwp-video-link"
-            <?= $srcAttributeName ?>="<?= $videoUrl ?>"
+            <?= $srcAttributeName ?>="<?= esc_url($videoUrl) ?>"
             <?= $consentProviderAttribute ?>
         >
             <?php
@@ -51,9 +51,9 @@
                             width="480"
                             height="270"
                             loading="<?= $lazyLoadPreviewImage ? 'lazy' : 'eager' ?>"
-                            src="<?= $mediaURL ?>"
-                            alt="<?= $mediaAltText ?>"
-                            class="<?= $imageClassName ?>"
+                            src="<?= esc_url($mediaURL) ?>"
+                            alt="<?= esc_attr($mediaAltText) ?>"
+                            class="<?= esc_attr($imageClassName) ?>"
                             <?= $widthAndHeight ?>
                         />
                     <?php
@@ -62,9 +62,9 @@
             <?php PartialRenderer::renderInclude($playIconPath); ?>
         </a>
     <?php elseif ($type === 'inline'): ?>
-        <div class="ghwp-video-image" style='background-image: url("<?= $mediaURL ?>");'>
+        <div class="ghwp-video-image" style='background-image: url("<?= esc_url($mediaURL) ?>");'>
             <iframe
-                <?= $srcAttributeName ?>="<?= $videoUrl ?>"
+                <?= $srcAttributeName ?>="<?= esc_url($videoUrl) ?>"
                 <?= $consentProviderAttribute ?>
             ></iframe>
             <?php PartialRenderer::renderInclude($playIconPath); ?>

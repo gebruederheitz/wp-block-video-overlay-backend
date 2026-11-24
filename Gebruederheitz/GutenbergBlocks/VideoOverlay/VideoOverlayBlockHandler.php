@@ -104,7 +104,7 @@ class VideoOverlayBlockHandler extends DynamicBlock
 
         // Prepare the additional consent management provider type attribute
         $consentProviderAttribute = !empty($consentProviderType)
-            ? 'data-ghct-type="' . $consentProviderType . '"'
+            ? 'data-ghct-type="' . esc_attr($consentProviderType) . '"'
             : '';
         $attributes['consentProviderAttribute'] = $consentProviderAttribute;
 

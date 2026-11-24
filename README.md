@@ -112,6 +112,13 @@ You can override the template used by the block by simply putting a file into
 block's attributes are accessible using `get_query_var('attributeName')`. Take 
 look at [the default template](templates/video-overlay.php) as an example.
 
+The attribute values reach your template as editors entered them. Escape every
+value for where you print it, as the default template does: `esc_url()` for
+URLs (including inside an inline `style`), `esc_attr()` for other attribute
+values. Otherwise any account that can edit posts, Authors and Contributors
+included, can inject scripts into the page. If your template is a copy of the
+default one from before 5.0.1, add the escaping there too.
+
 Alternatively you can filter & override the template partial path and gain even
 more control:
 
