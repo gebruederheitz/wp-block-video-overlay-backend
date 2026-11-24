@@ -1,0 +1,9 @@
+# .phpstan.neon with the WordPress stubs swapped for those of another line.
+# Used by `task lint:wp`, which installs the stubs into WP_STUBS_DIR.
+includes:
+  - .phpstan.neon
+parameters:
+  tmpDir: %env.WP_STUBS_DIR%/phpstan
+  bootstrapFiles!:
+    - %env.WP_STUBS_DIR%/vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    - vendor/szepeviktor/phpstan-wordpress/bootstrap.php
