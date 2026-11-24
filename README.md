@@ -6,8 +6,9 @@ see [@gebruederheitz/wp-block-video-overlay](https://www.npmjs.com/package/@gebr
 ## Supported versions
 
 - **PHP:** the minimum is `require.php` in `composer.json`. CI runs the test
-  suite on every PHP minor line from there to the newest release (the `php`
-  matrix in `.github/workflows/test.yml`).
+  suite on every supported PHP minor line from there (the `php` matrix in
+  `.github/workflows/test.yml`). Entries marked as canaries test newer PHP
+  lines early and are not supported yet.
 - **WordPress:** the code is checked statically, not at runtime: PHPStan
   analyses it against the WordPress stubs of each line in `WP_VERSIONS` in
   `Taskfile.yaml`. The list always includes the line of the
