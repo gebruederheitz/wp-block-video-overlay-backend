@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/bootstrap.php"
+         cacheDirectory=".phpunit.cache"
          colors="true"
-         cacheResultFile=".phpunit.result.cache"
-         convertDeprecationsToExceptions="true"
+         failOnDeprecation="true"
+         failOnPhpunitDeprecation="true"
+         failOnNotice="true"
          failOnWarning="true"
          failOnRisky="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnPhpunitDeprecations="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
 >
     <testsuites>
         <testsuite name="default">
             <directory>tests/</directory>
         </testsuite>
     </testsuites>
+    <!-- Deprecations count as first-party (and fail the run) when triggered
+         from these paths, e.g. a call to a #[Deprecated] library method. -->
+    <source>
+        <include>
+            <directory>Gebruederheitz</directory>
+            <directory>templates</directory>
+        </include>
+    </source>
 </phpunit>

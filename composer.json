@@ -24,11 +24,11 @@
         "league/uri-components": "^7.8"
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.1.56",
+        "phpstan/phpstan": "^2.3.7",
         "szepeviktor/phpstan-wordpress": "^v2.0.3",
-        "wecodemore/wpstarter": "~2.0",
-        "johnpbloch/wordpress-core": "6.9.*@stable",
-        "phpunit/phpunit": "^9.6"
+        "johnpbloch/wordpress-core": "7.1.*@stable",
+        "phpunit/phpunit": "^11.5",
+        "johnpbloch/wordpress-core-installer": "^2.0"
     },
     "config": {
         "allow-plugins": {

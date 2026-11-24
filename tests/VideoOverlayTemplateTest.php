@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use DOMXPath;
 use Gebruederheitz\GutenbergBlocks\PartialRenderer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -130,9 +131,9 @@ class VideoOverlayTemplateTest extends TestCase
     }
 
     /**
-     * @dataProvider maliciousAttributes
      * @param array<string, mixed> $attributes
      */
+    #[DataProvider('maliciousAttributes')]
     public function testAttributeValuesCannotInjectMarkup(array $attributes): void
     {
         $xpath = $this->render($attributes);
