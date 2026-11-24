@@ -143,6 +143,6 @@ task test
 ```
 
 Locally, `task test` runs on one PHP only. CI runs it on every supported PHP
-line using prebuilt PHP binaries, and runs `task lint` once on the
-`.tool-versions` PHP. Deprecations and warnings fail both the syntax check and
+line using prebuilt PHP binaries, and runs `task lint` once on the PHP line
+in `.tool-versions`. Deprecations and warnings fail both the syntax check and
 PHPUnit.

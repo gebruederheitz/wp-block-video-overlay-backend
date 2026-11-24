@@ -47,8 +47,9 @@ jobs:
       - name: Run the test suite
         run: task test
 
-  # The WordPress matrix (WP_VERSIONS in Taskfile.yaml), on the PHP and
-  # Node.js pinned in .tool-versions.
+  # The WordPress matrix (WP_VERSIONS in Taskfile.yaml), on the PHP line and
+  # the Node.js version pinned in .tool-versions (setup-php takes the minor
+  # line only and installs its newest patch).
   lint:
     runs-on: ubuntu-latest
 

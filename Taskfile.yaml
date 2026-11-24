@@ -47,7 +47,7 @@ tasks:
       # A Composer project of its own per line, so composer.json, composer.lock
       # and vendor/ keep the stubs the lockfile pins.
       - mkdir -p {{.STUBS_DIR}}
-      - composer require --quiet --no-interaction --working-dir={{.STUBS_DIR}} 'php-stubs/wordpress-stubs:~{{.WP}}.0'
+      - composer require --no-progress --no-interaction --working-dir={{.STUBS_DIR}} 'php-stubs/wordpress-stubs:~{{.WP}}.0'
       - |
         echo "PHPStan against the WordPress stubs $(composer show --working-dir={{.STUBS_DIR}} php-stubs/wordpress-stubs | sed -n 's/^versions *: *\* *//p')"
       - vendor/bin/phpstan --memory-limit=2G --no-progress analyse -c .phpstan-wp.neon
