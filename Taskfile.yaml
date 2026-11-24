@@ -1,28 +1,92 @@
 version: 3
+
+vars:
+  # The WordPress minor lines PHPStan checks the code against, using each
+  # line's php-stubs/wordpress-stubs. It must include the line of
+  # johnpbloch/wordpress-core in composer.lock; `task lint` fails otherwise.
+  WP_VERSIONS: 6.9 7.0 7.1
+
 tasks:
   lint:
-    desc: 'Perform linting and basic code style checks.'
+    desc: Prettier check, then PHPStan against every supported WordPress line
     deps:
       - install-dependencies
     sources:
       - Gebruederheitz/**/*.php
+      - .phpstan.neon
+      - .phpstan-wp.neon
+      - .prettierrc
+      - composer.lock
+      - Taskfile.yaml
     cmds:
       - task: lint:node
-      - composer lint
+      - task: lint:wp:covers-core
+      - for:
+          var: WP_VERSIONS
+        task: lint:wp
+        vars:
+          WP: '{{.ITEM}}'
 
   lint:node:
     dir: util
     internal: true
     cmd: npm run lint
 
-  test:
-    desc: 'Run the PHPUnit test suite.'
+  lint:wp:
+    desc: Run PHPStan against the stubs of one WordPress line (WP=7.0)
+    label: 'lint:wp:{{.WP}}'
+    requires:
+      vars: [WP]
     deps:
-      - install-dependencies
+      - install-dependencies:php
+    vars:
+      STUBS_DIR: '{{.ROOT_DIR}}/.wp-stubs/{{.WP}}'
+    env:
+      WP_STUBS_DIR: '{{.STUBS_DIR}}'
+    cmds:
+      # A Composer project of its own per line, so composer.json, composer.lock
+      # and vendor/ keep the stubs the lockfile pins.
+      - mkdir -p {{.STUBS_DIR}}
+      - composer require --no-progress --no-interaction --working-dir={{.STUBS_DIR}} 'php-stubs/wordpress-stubs:~{{.WP}}.0'
+      - |
+        echo "PHPStan against the WordPress stubs $(composer show --working-dir={{.STUBS_DIR}} php-stubs/wordpress-stubs | sed -n 's/^versions *: *\* *//p')"
+      - vendor/bin/phpstan --memory-limit=2G --no-progress analyse -c .phpstan-wp.neon
+
+  lint:wp:covers-core:
+    internal: true
+    silent: true
+    cmd: |
+      core=$(composer show --locked johnpbloch/wordpress-core | sed -n 's/^versions *: *\* *//p' | cut -d. -f1,2)
+      case " {{.WP_VERSIONS}} " in
+        *" $core "*) ;;
+        *)
+          echo "WP_VERSIONS in Taskfile.yaml ({{.WP_VERSIONS}}) does not include $core, the line of johnpbloch/wordpress-core in composer.lock." >&2
+          exit 1
+          ;;
+      esac
+
+  test:
+    desc: Syntax-check and run the PHPUnit test suite on the PHP in use (CI runs it on every supported PHP line)
+    deps:
+      - install-dependencies:php
     sources:
       - Gebruederheitz/**/*.php
+      - templates/**/*.php
       - tests/**/*.php
+      - phpunit.xml.dist
+      - composer.lock
+      - .tool-versions
     cmds:
+      - php --version | head -n 1
+      # phpunit only loads what the tests use, so lint every file as well;
+      # deprecations and warnings count as failures.
+      - |
+        errors=$(find Gebruederheitz templates tests -name '*.php' -print0 \
+          | xargs -0 -n1 php -d display_errors=stderr -d error_reporting=-1 -l 2>&1 >/dev/null) || true
+        if [ -n "$errors" ]; then
+          echo "$errors" >&2
+          exit 1
+        fi
       - composer test
 
   prettier:
@@ -60,9 +124,10 @@ tasks:
 
   install-dependencies:php:
     internal: true
+    run: once
     sources:
       - composer.json
       - composer.lock
     generates:
       - vendor/**/*
-    cmd: composer install
+    cmd: composer install --no-interaction

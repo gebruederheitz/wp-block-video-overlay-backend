@@ -48,7 +48,6 @@ class VideoOverlayBlockDefaultsTest extends TestCase
     {
         $reflection = new ReflectionClass(VideoOverlayBlock::class);
         $method = $reflection->getMethod('getAttributes');
-        $method->setAccessible(true);
 
         // getAttributes() is an instance method but only reads the
         // ATTRIBUTES constant and calls apply_filters() (stubbed as a

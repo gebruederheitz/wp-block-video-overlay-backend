@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # The PHP matrix, with the dependencies (and WordPress stubs) composer.lock
+  # pins. Prebuilt PHP from setup-php, so no PHP is compiled here.
+  test:
+    name: Test (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Every PHP minor line from require.php in composer.json to the newest
+        # release. Raising the minimum means changing require.php and
+        # config.platform.php in composer.json as well.
+        php: ['8.2', '8.3', '8.4', '8.5']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer
+
+      - name: Set up go-task
+        uses: go-task/setup-task@v2
+
+      - name: Composer Cache
+        uses: gebruederheitz/actions/composer-cache@v1
+
+      - name: Run the test suite
+        run: task test
+
+  # The WordPress matrix (WP_VERSIONS in Taskfile.yaml), on the PHP line and
+  # the Node.js version pinned in .tool-versions (setup-php takes the minor
+  # line only and installs its newest patch).
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version-file: .tool-versions
+          coverage: none
+          tools: composer
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .tool-versions
+          cache: npm
+          cache-dependency-path: util/package-lock.json
+
+      - name: Set up go-task
+        uses: go-task/setup-task@v2
+
+      - name: Composer Cache
+        uses: gebruederheitz/actions/composer-cache@v1
+
+      - name: Run the linting suite
+        run: task lint

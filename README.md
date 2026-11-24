@@ -3,6 +3,17 @@
 see [@gebruederheitz/wp-block-video-overlay](https://www.npmjs.com/package/@gebruederheitz/wp-block-video-overlay)
 
 
+## Supported versions
+
+- **PHP:** the minimum is `require.php` in `composer.json`. CI runs the test
+  suite on every PHP minor line from there to the newest release (the `php`
+  matrix in `.github/workflows/test.yml`).
+- **WordPress:** the code is checked statically, not at runtime: PHPStan
+  analyses it against the WordPress stubs of each line in `WP_VERSIONS` in
+  `Taskfile.yaml`. The list always includes the line of the
+  `johnpbloch/wordpress-core` dev dependency.
+
+
 ## Usage
 
 ### Registering the block
@@ -113,3 +124,25 @@ add_filter(VideoOverlayBlock::HOOK_TEMPLATE_PARTIAL, function (string $partial, 
     return $partial;
 }, 3);
 ```
+
+
+## Development
+
+Tooling: [asdf](https://asdf-vm.com/) (PHP and Node.js pinned in
+`.tool-versions`), [go-task](https://taskfile.dev/), Composer and npm.
+
+```bash
+# Prettier check, then PHPStan against the stubs of every WordPress line in WP_VERSIONS
+task lint
+
+# PHPStan against the stubs of one WordPress line only
+task lint:wp WP=7.0
+
+# Syntax-check every PHP file and run PHPUnit, on the .tool-versions PHP
+task test
+```
+
+Locally, `task test` runs on one PHP only. CI runs it on every supported PHP
+line using prebuilt PHP binaries, and runs `task lint` once on the PHP line
+in `.tool-versions`. Deprecations and warnings fail both the syntax check and
+PHPUnit.

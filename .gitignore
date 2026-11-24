@@ -5,3 +5,4 @@ node_modules/
 .wp/
 .phpunit.cache/
 .phpunit.result.cache
+.wp-stubs/
