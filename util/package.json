@@ -4,7 +4,7 @@
   "description": "Utilities for the gebruederheitz/wp-block-video-overlay-backend PHP composer package",
   "main": "",
   "engines": {
-    "node": ">=16"
+    "node": ">=26"
   },
   "scripts": {
     "lint": "prettier -c --config ../.prettierrc ../Gebruederheitz/",
@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/gebruederheitz/wp-block-video-overlay-backend#readme",
   "dependencies": {
-    "@prettier/plugin-php": "^0.25.0",
-    "prettier": "^3.8.3",
-    "release-it": "^20.0.1"
+    "@prettier/plugin-php": "^0.26.0",
+    "prettier": "^3.10.1",
+    "release-it": "^21.1.3"
   }
 }
