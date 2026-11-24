@@ -17,15 +17,22 @@ jobs:
   # The PHP matrix, with the dependencies (and WordPress stubs) composer.lock
   # pins. Prebuilt PHP from setup-php, so no PHP is compiled here.
   test:
-    name: Test (PHP ${{ matrix.php }})
+    name: Test (PHP ${{ matrix.php }}${{ matrix.canary && ', canary' || '' }})
     runs-on: ubuntu-latest
+    # A canary may fail without failing the workflow.
+    continue-on-error: ${{ matrix.canary }}
     strategy:
       fail-fast: false
       matrix:
-        # Every PHP minor line from require.php in composer.json to the newest
-        # release. Raising the minimum means changing require.php and
-        # config.platform.php in composer.json as well.
+        # Every supported PHP minor line, from require.php in composer.json to
+        # the newest one the package supports. Raising the minimum means
+        # changing require.php and config.platform.php in composer.json as well.
         php: ['8.2', '8.3', '8.4', '8.5']
+        canary: [false]
+        # Canaries: PHP lines not supported yet, tested early without blocking.
+        include:
+          - php: '8.6'
+            canary: true
 
     steps:
       - name: Checkout code
